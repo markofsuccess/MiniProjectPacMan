@@ -87,7 +87,5 @@ public class Main  {
             }
             terminal.flush();
         }
-        System.out.println("test delite");
-
     }
 }
