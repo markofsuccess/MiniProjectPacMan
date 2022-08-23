@@ -14,8 +14,21 @@ public class Main  {
         int x = 5;
         int y = 5;
         final char player = 'X';
+        final char block = '\u2588';
         terminal.setCursorPosition(x, y);
         terminal.putCharacter(player);
+
+        // Create obsticles array
+        Position[] obsticles = new Position[10];
+        for(int i = 0;i<10;i++){
+            obsticles[i] = new Position(10+i, 10);
+        }
+
+        // Use obsticles array to print to lanterna
+        for (Position p : obsticles) {
+            terminal.setCursorPosition(p.x, p.y);
+            terminal.putCharacter(block);
+        }
 
         boolean continueReadingInput = true;
         while (continueReadingInput) {
@@ -55,10 +68,29 @@ public class Main  {
                     x -= 1;
                     break;
             }
+            boolean crashIntoObsticle = false;
+            for (Position p : obsticles) {
+                if (p.x == x && p.y == y) {
+                    crashIntoObsticle = true;
+                }
+            }
+
+            if (crashIntoObsticle) {
+                x = oldX;
+                y = oldY;
+            }
+            else {
+                terminal.setCursorPosition(oldX, oldY); // move cursor to old position
+                terminal.putCharacter(' '); // clean up by printing space on old position
+                terminal.setCursorPosition(x, y);
+                terminal.putCharacter(player);
+            }
+
             terminal.setCursorPosition(oldX, oldY); // move cursor to old position
             terminal.putCharacter(' '); // clean up by printing space on old position
             terminal.setCursorPosition(x, y);
             terminal.putCharacter(player);
+            terminal.flush();
         }
 
     }
