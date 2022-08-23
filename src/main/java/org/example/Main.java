@@ -18,14 +18,14 @@ public class Main  {
         terminal.setCursorPosition(x, y);
         terminal.putCharacter(player);
 
-        // Create obsticles array
-        Position[] obsticles = new Position[10];
+        // Create obstacles array
+        Position[] obstacles = new Position[10];
         for(int i = 0;i<10;i++){
-            obsticles[i] = new Position(10+i, 10);
+            obstacles[i] = new Position(10+i, 10);
         }
 
-        // Use obsticles array to print to lanterna
-        for (Position p : obsticles) {
+        // Use obstacles array to print to lanterna
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.x, p.y);
             terminal.putCharacter(block);
         }
@@ -68,14 +68,14 @@ public class Main  {
                     x -= 1;
                     break;
             }
-            boolean crashIntoObsticle = false;
-            for (Position p : obsticles) {
+            boolean crashIntoObstacle = false;
+            for (Position p : obstacles) {
                 if (p.x == x && p.y == y) {
-                    crashIntoObsticle = true;
+                    crashIntoObstacle = true;
                 }
             }
 
-            if (crashIntoObsticle) {
+            if (crashIntoObstacle) {
                 x = oldX;
                 y = oldY;
             }
@@ -85,11 +85,6 @@ public class Main  {
                 terminal.setCursorPosition(x, y);
                 terminal.putCharacter(player);
             }
-
-            terminal.setCursorPosition(oldX, oldY); // move cursor to old position
-            terminal.putCharacter(' '); // clean up by printing space on old position
-            terminal.setCursorPosition(x, y);
-            terminal.putCharacter(player);
             terminal.flush();
         }
 
